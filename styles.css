@@ -1,0 +1,275 @@
+/* Google DeepMind / Quantum Cosmic Theme Styles for Gemini 3.7 Flash Showcase */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #030712;
+  --bg-secondary: #0b1329;
+  --bg-card: rgba(15, 23, 42, 0.65);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-card-hover: rgba(56, 189, 248, 0.3);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --gemini-blue: #3b82f6;
+  --gemini-purple: #8b5cf6;
+  --gemini-cyan: #06b6d4;
+  --gemini-amber: #f59e0b;
+  --gemini-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  --gemini-glow: rgba(56, 189, 248, 0.15);
+  --card-spotlight: rgba(56, 189, 248, 0.08);
+}
+
+.light-theme {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --border-card: rgba(0, 0, 0, 0.08);
+  --border-card-hover: rgba(37, 99, 235, 0.35);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --gemini-blue: #2563eb;
+  --gemini-purple: #7c3aed;
+  --gemini-cyan: #0891b2;
+  --gemini-amber: #d97706;
+  --gemini-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 50%, #9333ea 100%);
+  --gemini-glow: rgba(2, 132, 199, 0.1);
+  --card-spotlight: rgba(2, 132, 199, 0.05);
+}
+
+* {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scroll-behavior: smooth;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* Reading Progress Bar */
+#reading-progress {
+  transform-origin: 0%;
+  transition: width 0.1s ease-out;
+}
+
+/* Canvas Background */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gradient Text Shimmer */
+.text-gradient {
+  background: var(--gemini-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Spotlight Card Effect */
+.spotlight-card {
+  position: relative;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--card-spotlight),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.spotlight-card:hover {
+  border-color: var(--border-card-hover);
+  box-shadow: 0 20px 40px -15px var(--gemini-glow);
+}
+
+/* Shimmer Border */
+.glow-border {
+  position: relative;
+}
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.4;
+  filter: blur(4px);
+  animation: borderRotate 4s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* Pulse Glow Animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Floating Animation */
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatAnim 5s ease-in-out infinite;
+}
+
+/* Glass Pill Navigation */
+.glass-nav {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.light-theme .glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Thinking Bubble Transitions */
+.thinking-bubble {
+  background: rgba(30, 41, 59, 0.5);
+  border-left: 3px solid #38bdf8;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.light-theme .thinking-bubble {
+  background: rgba(241, 245, 249, 0.8);
+  border-left: 3px solid #0284c7;
+}
+
+/* Custom Tabs Active Indicator */
+.tab-active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+}
+.light-theme .tab-active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.1), rgba(79, 70, 229, 0.1));
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+}
+
+/* IDE Terminal Cursor */
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 18px;
+  background-color: #38bdf8;
+  vertical-align: middle;
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Heatmap Grid Cell */
+.heatmap-cell {
+  transition: transform 0.15s ease, filter 0.15s ease;
+  cursor: pointer;
+}
+.heatmap-cell:hover {
+  transform: scale(1.4);
+  z-index: 10;
+  filter: brightness(1.3);
+}
+
+/* Range Slider Custom Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(148, 163, 184, 0.2);
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #38bdf8;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  transition: transform 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
